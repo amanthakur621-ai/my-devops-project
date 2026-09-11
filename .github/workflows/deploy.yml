@@ -1,0 +1,23 @@
+name: Pro-Level Auto Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-aws:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Server mein ghusna aur Deploy karna
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ubuntu
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd ~/my-docker-site
+            git pull origin main
+            chmod +x deploy.sh
+            ./deploy.sh
+
